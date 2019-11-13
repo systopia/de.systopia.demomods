@@ -134,6 +134,18 @@ function demomods_civicrm_entityTypes(&$entityTypes) {
   _demomods_civix_civicrm_entityTypes($entityTypes);
 }
 
+function demomods_civicrm_pageRun(&$page) {
+  if (in_array($page->getVar('_name'), array(
+    'CRM_Case_Page_Tab',
+    'CRM_Case_Page_CaseDetails',
+  ))) {
+    $tplVars = $page->get_template_vars();
+    $case_id = $tplVars['caseID'];
+    CRM_Core_Resources::singleton()->addVars(E::SHORT_NAME, array('caseId' => $case_id));
+    CRM_Core_Resources::singleton()->addScriptFile(E::LONG_NAME, 'js/case-page-activity-table.js');
+  }
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
